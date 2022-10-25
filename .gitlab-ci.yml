@@ -1,0 +1,43 @@
+stages:
+    -   artifacting
+
+
+15:
+    extends:    .make_docker
+    environment:
+        name: "15"
+    variables:
+        VERSION: 15.0
+
+16:
+    extends:    .make_docker
+    environment:
+        name: "16"
+    variables:
+        VERSION: 16.0
+
+
+.make_docker:
+    stage:  artifacting
+    image:  docker:stable
+    services:
+        -   name:   docker:dind
+            command: ["--experimental"]
+    environment:
+        deployment_tier: production
+        action: start
+    allow_failure: false
+    only:
+        refs:
+            -   main
+    variables:
+        VERSION: 16.0
+    before_script:
+        -   docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    script:
+        
+        -   docker build --squash --compress \
+            --build-arg VERSION=${VERSION} \
+            -tag $CI_REGISTRY_IMAGE/${VERSION}:latest \
+            .
+        -   docker push $CI_REGISTRY_IMAGE/${VERSION}:latest
