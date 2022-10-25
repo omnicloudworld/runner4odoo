@@ -38,6 +38,6 @@ stages:
         
         -   >
             docker build --squash --compress --build-arg VERSION=${VERSION}
-            -tag $CI_REGISTRY_IMAGE/${VERSION}:latest
+            --tag $CI_REGISTRY_IMAGE/${VERSION}:latest
             .
         -   docker push $CI_REGISTRY_IMAGE/${VERSION}:latest
