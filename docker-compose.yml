@@ -1,0 +1,37 @@
+version: '3.1'
+services:
+    web:
+        image: new-odoo
+        build:
+            context: .
+            dockerfile: dockerfile
+        depends_on:
+            - db
+        links:
+            - db
+        ports:
+            - "8008:8008"
+        volumes:
+            - /tmp/odoo/session:/var/odoo/sessions
+            - /tmp/odoo/filestore:/var/odoo/filestore
+        user: "skyodoo:skyodoo"
+        environment:
+            - INIT=base
+            - ODOOPG_HOST=db
+            - ODOOPG_USER=odoo
+            - ODOOPG_PWD=odoo
+        #command: /opt/skyant/wrapper.sh
+
+    db:
+        image: postgres:14
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_PASSWORD=odoo
+            - POSTGRES_USER=odoo
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        volumes:
+            - odoo-db9:/var/lib/postgresql/data/pgdata
+
+
+volumes:
+    odoo-db9:

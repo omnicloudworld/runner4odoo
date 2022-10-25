@@ -1,19 +1,20 @@
 FROM registry.gitlab.com/skyant/runner/cloudrun/main
 
-
 ARG WORKDIR=/opt/skyodoo
 ARG VERSION="15.0"
 
 WORKDIR $WORKDIR
 
 
+COPY src/deb/ /tmp/deb
+COPY src/opt $WORKDIR
+COPY req.pip req.pip
+
 
 RUN \
     useradd -s /bin/bash -m -u 10001 skyodoo; \
     mkdir -p --mode=750 /home/skyodoo/.postgresql; chown skyodoo /home/skyodoo/.postgresql
 
-
-COPY src/deb/ /tmp/deb
 RUN \
     apt -y update; apt -y upgrade; \
     apt -y install postgresql-client nodejs npm \
@@ -24,8 +25,6 @@ RUN \
         liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev \
         xfonts-75dpi xfonts-100dpi xfonts-cyrillic xfonts-base; \
     dpkg -i /tmp/deb/*.deb
-
-
 
 RUN \
     wget https://github.com/odoo/odoo/archive/refs/heads/${VERSION}.zip -P /tmp/download; \
@@ -38,10 +37,8 @@ RUN \
     cp /tmp/download/odoo-${VERSION}/odoo-bin $WORKDIR/odoo-bin; \
     cp /tmp/download/odoo-${VERSION}/requirements.txt $WORKDIR/requirements.txt; \
     \
-    rm -r /tmp/download
-
-
-COPY req.pip req.pip
+    rm -r /tmp/download; \
+	chmod +x $WORKDIR/run.sh
 
 RUN \
     pip3.10 install --no-cache-dir --upgrade pip; \
