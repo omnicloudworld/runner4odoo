@@ -2,19 +2,19 @@ stages:
     -   artifacting
 
 
-15:
+"15":
     extends:    .make_docker
     environment:
         name: "15"
     variables:
-        VERSION: 15.0
+        VERSION: "15.0"
 
-16:
+"16":
     extends:    .make_docker
     environment:
         name: "16"
     variables:
-        VERSION: 16.0
+        VERSION: "16.0"
 
 
 .make_docker:
