@@ -41,3 +41,4 @@ html5lib
 lxml
 pyjwt
 
+geoip2

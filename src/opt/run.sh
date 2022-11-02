@@ -17,6 +17,8 @@
 	$( [[ ${ODOO_LOG_REQ} = "true" ]] && echo "--log-request" ) \
 	$( [[ ${ODOO_LOG_RESP} = "true" ]] && echo "--log-response" ) \
 	\
+	$( [[ ${ODOO_PROXY:=true} = "true" ]] && echo "--proxy-mode" ) \
+	\
 	--data-dir ${ODOO_DIR:=/var/odoo} \
 	--http-port ${ODOO_PORT:=8008} \
 	\
@@ -26,5 +28,4 @@
 	--db_password ${ODOOPG_PWD} \
 	--db_sslmode ${DB_SSL:=verify-ca} \
 	\
-	--proxy-mode \
-	--geoip-db /usr/share/GeoIP/GeoLite2-City.mmdb
+	--geoip-db /opt/maxmind/GeoLite2-City.mmdb
