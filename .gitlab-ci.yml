@@ -30,14 +30,13 @@ stages:
     only:
         refs:
             -   main
-    variables:
-        VERSION: 16.0
     before_script:
         -   docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     script:
         
         -   >
-            docker build --squash --compress --build-arg VERSION=${VERSION}
-            --tag $CI_REGISTRY_IMAGE/${VERSION}:latest
+            docker build --squash --compress --tag $CI_REGISTRY_IMAGE/${VERSION}:latest
+            --build-arg VERSION=${VERSION}
+            --build-arg MAXMIND_KEY=${MAXMIND_KEY}
             .
         -   docker push $CI_REGISTRY_IMAGE/${VERSION}:latest
