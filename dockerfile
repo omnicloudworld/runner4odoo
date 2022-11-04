@@ -1,20 +1,13 @@
 FROM registry.gitlab.com/skyant/runner/cloudrun/main
 
-ARG WORKDIR=/opt/skyodoo
 ARG VERSION
 ARG MAXMIND_KEY
 
-WORKDIR $WORKDIR
-
 
 COPY src/deb/ /tmp/deb
-COPY src/opt $WORKDIR
+COPY src/opt $PWD
 COPY req.pip req.pip
 
-
-RUN \
-    useradd -s /bin/bash -m -u 10001 skyodoo &&\
-    mkdir -p --mode=750 /home/skyodoo/.postgresql && chown skyodoo /home/skyodoo/.postgresql
 
 RUN \
     apt -y update; apt -y upgrade &&\
@@ -39,15 +32,15 @@ RUN \
     mv /tmp/download/GeoLite2-City_*/GeoLite2-City.mmdb /opt/maxmind/GeoLite2-City.mmdb
 
 RUN \
-    cp -r /tmp/download/odoo-${VERSION}/addons $WORKDIR/addons; \
-    cp -r /tmp/download/odoo-${VERSION}/odoo $WORKDIR/odoo; \
+    cp -r /tmp/download/odoo-${VERSION}/addons $PWD/addons; \
+    cp -r /tmp/download/odoo-${VERSION}/odoo $PWD/odoo; \
     \
-    cp /tmp/download/odoo-${VERSION}/odoo-bin $WORKDIR/odoo-bin; \
-    cp /tmp/download/odoo-${VERSION}/requirements.txt $WORKDIR/requirements.txt; \
+    cp /tmp/download/odoo-${VERSION}/odoo-bin $PWD/odoo-bin; \
+    cp /tmp/download/odoo-${VERSION}/requirements.txt $PWD/requirements.txt; \
     \
     rm -r /tmp/download ;\
     apt autoremove -y; apt clean --dry-run ;\
-	chmod +x $WORKDIR/run.sh
+	chmod +x $PWD/run.sh
 
 RUN \
     pip3.10 install --no-cache-dir --upgrade pip ;\
