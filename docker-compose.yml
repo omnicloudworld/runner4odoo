@@ -1,10 +1,13 @@
 version: '3.1'
 services:
     web:
-        image: new-odoo
+        image: dev-odoo
         build:
             context: .
             dockerfile: dockerfile
+            args:
+                VERSION: 16.0
+                MAXMIND_KEY: $MAXMIND_KEY
         depends_on:
             - db
         links:
@@ -12,14 +15,17 @@ services:
         ports:
             - "8008:8008"
         volumes:
-            - /tmp/odoo/session:/var/odoo/sessions
-            - /tmp/odoo/filestore:/var/odoo/filestore
-        user: "skyodoo:skyodoo"
+            - .odoo/session:/var/odoo/sessions
+            - .odoo/filestore:/var/odoo/filestore
+        #user: "skyodoo:skyodoo"
         environment:
             - INIT=base
             - ODOOPG_HOST=db
             - ODOOPG_USER=odoo
             - ODOOPG_PWD=odoo
+            - DB_SSL=disable
+            - ODOO_PROXY=disable
+            - ODOO_DEV=all
         #command: /opt/skyant/wrapper.sh
 
     db:
@@ -30,8 +36,7 @@ services:
             - POSTGRES_USER=odoo
             - PGDATA=/var/lib/postgresql/data/pgdata
         volumes:
-            - odoo-db9:/var/lib/postgresql/data/pgdata
-
+            - odoo-pg:/var/lib/postgresql/data/pgdata
 
 volumes:
-    odoo-db9:
+    odoo-pg:
