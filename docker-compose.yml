@@ -19,11 +19,11 @@ services:
             - .odoo/filestore:/var/odoo/filestore
         #user: "skyodoo:skyodoo"
         environment:
-            - INIT=base
-            - ODOOPG_HOST=db
-            - ODOOPG_USER=odoo
-            - ODOOPG_PWD=odoo
-            - DB_SSL=disable
+            - ODOO_INIT=base
+            - ODOO_PG_HOST=db
+            - ODOO_PG_USER=odoo
+            - ODOO_PG_PWD=odoo
+            - ODOO_PG_SSL=disable
             - ODOO_PROXY=disable
             - ODOO_DEV=all
         #command: /opt/skyant/wrapper.sh
