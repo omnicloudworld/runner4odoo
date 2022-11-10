@@ -5,8 +5,8 @@ ARG MAXMIND_KEY
 
 
 COPY src/deb/ /tmp/deb
-COPY src/opt $PWD
-COPY req.pip req.pip
+COPY src/pod $PWD
+COPY odoo.req /var/pip/odoorunner.req
 
 
 RUN \
@@ -36,7 +36,7 @@ RUN \
     cp -r /tmp/download/odoo-${VERSION}/odoo $PWD/odoo; \
     \
     cp /tmp/download/odoo-${VERSION}/odoo-bin $PWD/odoo-bin; \
-    cp /tmp/download/odoo-${VERSION}/requirements.txt $PWD/requirements.txt; \
+    cp /tmp/download/odoo-${VERSION}/requirements.txt /var/pip/odoosrc.req; \
     \
     rm -r /tmp/download ;\
     apt autoremove -y; apt clean --dry-run ;\
@@ -44,4 +44,5 @@ RUN \
 
 RUN \
     pip3.10 install --no-cache-dir --upgrade pip ;\
-    pip3.10 install --no-cache-dir --upgrade -r req.pip -r requirements.txt
+    pip3.10 install --no-cache-dir --upgrade \
+        -r /var/pip/odoorunner.req -r /var/pip/odoosrc.req
