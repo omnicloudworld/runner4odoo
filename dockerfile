@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/skyant/runner/cloudrun/main
+FROM registry.gitlab.com/skyant/runner/cloudrun/main:latest
 
 ARG VERSION
 ARG MAXMIND_KEY
