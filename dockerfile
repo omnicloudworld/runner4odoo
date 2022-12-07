@@ -40,7 +40,8 @@ RUN \
     \
     rm -r /tmp/download ;\
     apt autoremove -y; apt clean --dry-run ;\
-	chmod +x $PWD/run.sh
+	chmod +x $PWD/run.sh; \
+    ln -s /etc/odoo/odoo.conf /etc/odoo.conf
 
 RUN \
     pip3.10 install --no-cache-dir --upgrade pip ;\
