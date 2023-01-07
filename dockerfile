@@ -11,13 +11,14 @@ COPY odoo.req /var/pip/odoorunner.req
 
 RUN \
     apt -y update; apt -y upgrade &&\
-    apt -y install postgresql-client nodejs npm \
-        xz-utils python3-renderpm wget unzip \
+    apt -y install postgresql-client nodejs npm python3-phonenumbers \
+        xz-utils python3-renderpm wget unzip ffmpeg \
         \
         python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
         libtiff5-dev libjpeg62-turbo-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev \
         liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev \
         xfonts-75dpi xfonts-100dpi xfonts-cyrillic xfonts-base &&\
+    npm install -g rtlcss &&\
     dpkg -i /tmp/deb/*.deb
 
 RUN \

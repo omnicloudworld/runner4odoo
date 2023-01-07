@@ -8,6 +8,7 @@ vobject
 watchdog
 xlrd
 xlwt
+pdfminer.six
 
 requests
 
