@@ -6,7 +6,6 @@ ARG MAXMIND_KEY
 
 COPY src/deb/ /tmp/deb
 COPY src/pod $PWD
-COPY src/ent $PWD/ent
 COPY odoo.req /var/pip/odoorunner.req
 
 

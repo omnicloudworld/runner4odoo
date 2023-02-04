@@ -1,31 +1,29 @@
-num2words
 pdfminer
 phonenumbers
 pyldap
-qrcode
 slugify
-vobject
 watchdog
-xlrd
-xlwt
 pdfminer.six
+inotify
+html2text
+paramiko
+html5lib
+pyjwt
+geoip2
 
-requests
 
 hypercorn
 gunicorn
 
-html2text
-paramiko
 
 #pandas-gbq
+
 
 #google-cloud-bigquery
 #google-cloud-bigquery-connection
 #google-cloud-bigquery-datatransfer
 #google-cloud-bigquery-storage
 #google-cloud-dataflow-client
-
 
 google-cloud-datacatalog
 google-cloud-firestore
@@ -37,9 +35,7 @@ google-cloud-workflows
 google-cloud-storage
 
 google-auth
+google_auth
+google-auth-oauthlib
 
-html5lib
-lxml
-pyjwt
-
-geoip2
+firebase-admin
