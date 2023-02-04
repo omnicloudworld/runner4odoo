@@ -6,6 +6,7 @@ ARG MAXMIND_KEY
 
 COPY src/deb/ /tmp/deb
 COPY src/pod $PWD
+COPY src/ent $PWD/ent
 COPY odoo.req /var/pip/odoorunner.req
 
 
@@ -17,7 +18,8 @@ RUN \
         python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
         libtiff5-dev libjpeg62-turbo-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev \
         liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev \
-        xfonts-75dpi xfonts-100dpi xfonts-cyrillic xfonts-base &&\
+        xfonts-75dpi xfonts-100dpi xfonts-cyrillic xfonts-base fonts-inconsolata \
+        fonts-font-awesome fonts-roboto-unhinted gsfonts &&\
     npm install -g rtlcss &&\
     dpkg -i /tmp/deb/*.deb
 
