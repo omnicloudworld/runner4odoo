@@ -20,7 +20,7 @@ RUN \
         xfonts-75dpi xfonts-100dpi xfonts-cyrillic xfonts-base fonts-inconsolata \
         fonts-font-awesome fonts-roboto-unhinted gsfonts &&\
     npm install -g rtlcss &&\
-    dpkg -i /tmp/deb/*.deb
+    dpkg -i /tmp/deb/wkhtmltox*.deb
 
 RUN \
     wget https://github.com/odoo/odoo/archive/refs/heads/${VERSION}.zip -P /tmp/download &&\
@@ -29,23 +29,25 @@ RUN \
 RUN \
     curl "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_KEY&suffix=tar.gz" \
         -o /tmp/download/GeoLite2-City.tar.gz &&\
+    ls -l /tmp/download &&\
     tar -xzvf /tmp/download/GeoLite2-City.tar.gz --directory /tmp/download &&\
     mkdir -p /opt/maxmind &&\
     mv /tmp/download/GeoLite2-City_*/GeoLite2-City.mmdb /opt/maxmind/GeoLite2-City.mmdb
 
 RUN \
-    cp -r /tmp/download/odoo-${VERSION}/addons $PWD/addons; \
-    cp -r /tmp/download/odoo-${VERSION}/odoo $PWD/odoo; \
+    cp -r /tmp/download/odoo-${VERSION}/addons $PWD/addons/free &&\
+    cp -r /tmp/download/odoo-${VERSION}/odoo $PWD/odoo &&\
     \
-    cp /tmp/download/odoo-${VERSION}/odoo-bin $PWD/odoo-bin; \
-    cp /tmp/download/odoo-${VERSION}/requirements.txt /var/pip/odoosrc.req; \
+    cp /tmp/download/odoo-${VERSION}/odoo-bin $PWD/odoo-bin &&\
+    cp /tmp/download/odoo-${VERSION}/requirements.txt /var/pip/odoosrc.req &&\
     \
-    rm -r /tmp/download ;\
-    apt autoremove -y; apt clean --dry-run ;\
-	chmod +x $PWD/run.sh; \
+    rm -r /tmp/download &&\
+    apt autoremove -y && apt clean --dry-run &&\
+	chmod +x $PWD/run.sh &&\
     ln -s /etc/odoo/odoo.conf /etc/odoo.conf
 
 RUN \
-    pip3.10 install --no-cache-dir --upgrade pip ;\
-    pip3.10 install --no-cache-dir --upgrade \
-        -r /var/pip/odoorunner.req -r /var/pip/odoosrc.req
+    pip3.10 install --no-cache-dir --upgrade pip &&\
+    pip3.10 uninstall -y Flask &&\
+    pip3.10 install --no-cache-dir --upgrade -r /var/pip/odoorunner.req &&\
+    pip3.10 install --no-cache-dir --upgrade -r /var/pip/odoosrc.req

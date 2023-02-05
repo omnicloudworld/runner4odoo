@@ -26,6 +26,7 @@ services:
             - ODOO_PG_SSL=disable
             - ODOO_PROXY=disable
             - ODOO_DEV=all
+            #- ODOO_MORE_ADDONS=/opt/skyant/addons/ent
         #command: /opt/skyant/wrapper.sh
 
     db:
