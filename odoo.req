@@ -3,7 +3,7 @@ phonenumbers
 pyldap
 slugify
 watchdog
-pdfminer.six
+pdfminer.six==20220319
 inotify
 html2text
 paramiko

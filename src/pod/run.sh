@@ -1,9 +1,22 @@
 #! /bin/bash
 
+ADDONS_PATH=/opt/skyant/odoo/addons,/opt/skyant/addons/free
+if [[ -v ODOO_MORE_ADDONS ]]; then
+	ADDONS_PATH=${ADDONS_PATH},${ODOO_MORE_ADDONS}
+fi
+
 ./odoo-bin \
 	\
-	--http-port=${ODOO_PORT:=8008} \
-	--db_sslmode=${ODOO_PG_SSL:=verify-ca} \
+	--http-port ${ODOO_PORT:=8008} \
+	\
+	--db_port ${ODOO_PG_PORT:=5432} \
+	--db_host ${ODOO_PG_HOST} \
+	--db_user ${ODOO_PG_USER} \
+	--db_password ${ODOO_PG_PWD} \
+	--db_sslmode ${ODOO_PG_SSL:=verify-ca} \
+	\
+	--data-dir ${ODOO_DIR:=/var/odoo} \
+	--addons-path ${ADDONS_PATH} \
     \
 	$( [[ ${ODOO_INIT} == 'base' ]] && echo "-i base" ) \
 	$( [[ -z ${ODOO_DB_FILTER} ]] || echo "--db-filter=${ODOO_DB_FILTER}" ) \
