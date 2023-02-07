@@ -5,6 +5,9 @@ if [[ -v ODOO_MORE_ADDONS ]]; then
 	ADDONS_PATH=${ADDONS_PATH},${ODOO_MORE_ADDONS}
 fi
 
+
+set -x
+
 ./odoo-bin --http-port=${ODOO_PORT:=8008} \
 	\
 	--addons-path=${ADDONS_PATH} \
